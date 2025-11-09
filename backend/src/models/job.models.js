@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 const jobSchema = new mongoose.Schema({
 title: { type: String, required: true },
-companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'User',},
 location: String,
-type: { type: String, enum: ['internship', 'full-time', 'part-time'], default: 'full-time' },
+type: { type: String, enum: ["Full-time", "Part-time", "Internship", "Contract"], default: 'Full-time' },
 description: String,
 requirements: [String],
 salary: String,
