@@ -1,0 +1,3 @@
+{
+  "ignore": ["my-app/*", "../my-app/*"]
+}
