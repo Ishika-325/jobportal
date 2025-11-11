@@ -16,7 +16,7 @@ const CreateJobPage = () => {
     location: "",
     salary: "",
     type: "Full-time",
-    company: "",
+    companyName: "",
   })
 
   const handleChange = (e) => {
@@ -65,10 +65,10 @@ const CreateJobPage = () => {
                 <label className="form-label">Company Name</label>
                 <input
                   type="text"
-                  name="company"
+                  name="companyName"
                   className="form-input"
                   placeholder="Your Company"
-                  value={formData.company}
+                  value={formData.companyName}
                   onChange={handleChange}
                   required
                 />

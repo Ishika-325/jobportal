@@ -191,8 +191,10 @@ const EmployerDashboard = ({ data = [], onStatusChange, onDelete, onEdit }) => {
           <div key={application._id} className="card">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-slate-900 mb-1">{application.jobId?.title || "Job"}</h3>
-                <p className="text-gray-600 mb-3">Applicant: {application.userId?.name || "N/A"}</p>
+                <h3>{application.job?.title || "Job"}</h3>
+                <p>Applicant: {application.applicant?.fullname || "N/A"}</p>
+                <p>Email: {application.applicant?.email || "N/A"}</p>
+
               </div>
               <select
                 value={application.status || "pending"}

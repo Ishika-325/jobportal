@@ -13,7 +13,7 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [newSkill, setNewSkill] = useState("");
   const [profile, setProfile] = useState({
-    name: "Anvika Sharma",
+    fullname: "Anvika Sharma",
     email: "anvika.sharma@example.com",
     profileImg: "",
     university: "UIT-RGPV, Bhopal",
@@ -25,8 +25,8 @@ const Profile = () => {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
+    const { fullname, value } = e.target;
+    setProfile((prev) => ({ ...prev, [fullname]: value }));
   };
 
   const handleProfileImgUpload = (e) => {
@@ -93,7 +93,7 @@ const Profile = () => {
               </div>
             )}
           </div>
-          <h2 className="text-xl font-semibold">{profile.name}</h2>
+          <h2 className="text-xl font-semibold">{profile.fullname}</h2>
           <p className="text-gray-500 text-sm">{profile.email}</p>
 
           <button
@@ -119,13 +119,13 @@ const Profile = () => {
               {isEditing ? (
                 <input
                   type="text"
-                  name="name"
-                  value={profile.name}
+                  name="fullname"
+                  value={profile.fullname}
                   onChange={handleChange}
                   className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
                 />
               ) : (
-                <p>{profile.name}</p>
+                <p>{profile.fullname}</p>
               )}
             </div>
 

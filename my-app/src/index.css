@@ -1,12 +1,6 @@
-@import "tailwindcss";
-/* Main styling for Job Portal */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+ @import "tailwindcss";
 
-:root {
+ :root {
   --primary-dark: #1e293b;
   --primary-light: #0f172a;
   --accent: #0ea5e9;
@@ -29,11 +23,25 @@ body {
   color: var(--text-dark);
 }
 
-/* Utility Classes */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+ .form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.card {
+  background-color: var(--bg-white);
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .btn {
@@ -45,6 +53,7 @@ body {
   font-weight: 500;
   transition: all 0.3s ease;
 }
+
 
 .btn-primary {
   background-color: var(--accent);
@@ -79,26 +88,8 @@ body {
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-.card {
-  background-color: var(--bg-white);
-  border-radius: 8px;
-  padding: 20px;
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
 .form-label {
   display: block;
-  margin-bottom: 8px;
   font-weight: 500;
   color: var(--text-dark);
 }
@@ -114,13 +105,41 @@ body {
   font-family: inherit;
 }
 
-.form-input:focus,
-.form-textarea:focus,
-.form-select:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+
+/*Main styling for Job Portal
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+
+
+
+
+/* Utility Classes */
+/* .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+
+
+
+
+
+
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+
+
+
+
+
 
 .modal-overlay {
   position: fixed;
@@ -145,13 +164,4 @@ body {
   overflow-y:auto;
 }
 
-
-@media (max-width: 768px) {
-  .container {
-    padding: 0 16px;
-  }
-
-  .modal {
-    max-width: 90%;
-  }
-}
+ */ 
