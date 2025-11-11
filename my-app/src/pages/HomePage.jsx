@@ -10,36 +10,35 @@ import { toast } from "../utils/toast";
 
 const HomePage = () => {
   const [jobs, setJobs] = useState([]);
+  const [appliedJobs, setAppliedJobs] = useState([]); // ✅ Track which jobs the student has applied for
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
-  // ✅ Safe user parsing
   let user = null;
   try {
     const storedUser = localStorage.getItem("user");
     user = storedUser && storedUser !== "undefined" ? JSON.parse(storedUser) : null;
   } catch (error) {
     console.error("Error parsing user from localStorage:", error);
-    user = null;
   }
 
   useEffect(() => {
     fetchJobs();
+    if (user?.role === "student") {
+      fetchAppliedJobs(); // ✅ Also fetch applications if student
+    }
   }, []);
 
-  // ✅ Safe fetchJobs
+  // ✅ Fetch jobs
   const fetchJobs = async () => {
     try {
       const response = await api.get("/jobs", { withCredentials: true });
-      console.log("Backend response:", response.data);
-
       const jobsData = Array.isArray(response.data.jobs)
         ? response.data.jobs
         : Array.isArray(response.data.data)
         ? response.data.data
         : [];
-
       setJobs(jobsData);
     } catch (error) {
       console.error("Error fetching jobs:", error);
@@ -49,7 +48,18 @@ const HomePage = () => {
     }
   };
 
-  // ✅ Safe filtering
+  // ✅ Fetch student’s applied jobs
+  const fetchAppliedJobs = async () => {
+    try {
+      const res = await api.get("/applications/my", { withCredentials: true });
+      // Collect all job IDs from applications
+      const applied = res.data.data.map((app) => app.job._id);
+      setAppliedJobs(applied);
+    } catch (error) {
+      console.error("Error fetching applied jobs:", error);
+    }
+  };
+
   const filteredJobs = (jobs || []).filter(
     (job) =>
       job?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -71,7 +81,6 @@ const HomePage = () => {
       <Navbar />
 
       <div className="container mx-auto py-12">
-        {/* Hero Section */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold text-slate-900 mb-4">
             Find Your Dream Job
@@ -96,10 +105,11 @@ const HomePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredJobs.map((job) => (
               <JobCard
-                key={job._id || job.id || Math.random()}
+                key={job._id}
                 job={job}
                 onApply={handleApply}
                 isEmployer={user?.role === "employer"}
+                appliedJobs={appliedJobs} // ✅ Pass this
               />
             ))}
           </div>

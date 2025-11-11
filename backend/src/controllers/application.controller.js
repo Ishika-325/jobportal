@@ -1,5 +1,5 @@
-import  Application  from "../models/application.models.js";
-import  Job  from "../models/job.models.js";
+import { Application } from "../models/application.models.js";
+import { Job } from "../models/job.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
@@ -17,8 +17,7 @@ export const getMyApplications = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    count: applications.length,
-    applications,
+    data: applications,  // ✅ matches frontend
   });
 });
 
@@ -30,20 +29,18 @@ export const getEmployerApplications = asyncHandler(async (req, res) => {
     throw new ApiError(403, "Only employers can view job applications");
   }
 
-  // Find all jobs posted by this employer
   const employerJobs = await Job.find({ postedBy: req.user._id }).select("_id");
 
   const applications = await Application.find({
     job: { $in: employerJobs.map((job) => job._id) },
   })
     .populate("job", "title location")
-    .populate("applicant", "fullname email profile.resumeUrl")
+    .populate("applicant", "fullname email")
     .sort({ createdAt: -1 });
 
   res.status(200).json({
     success: true,
-    count: applications.length,
-    applications,
+    data: applications,  // ✅ matches frontend
   });
 });
 
@@ -51,22 +48,21 @@ export const getEmployerApplications = asyncHandler(async (req, res) => {
    ✏️ Update Application Status (Employer Only)
    ====================================================== */
 export const updateApplicationStatus = asyncHandler(async (req, res) => {
-  const { applicationId } = req.params;
+  const { id } = req.params;      // ✅ match your route /applications/:id/status
   const { status } = req.body;
 
   if (req.user.role !== "employer") {
     throw new ApiError(403, "Only employers can update application status");
   }
 
-  const validStatuses = ["Pending", "Accepted", "Rejected"];
+  const validStatuses = ["pending", "accepted", "rejected"];  // ✅ lowercase
   if (!validStatuses.includes(status)) {
     throw new ApiError(400, "Invalid status value");
   }
 
-  const application = await Application.findById(applicationId).populate("job");
+  const application = await Application.findById(id).populate("job");
   if (!application) throw new ApiError(404, "Application not found");
 
-  // Ensure employer owns the job
   if (application.job.postedBy.toString() !== req.user._id.toString()) {
     throw new ApiError(403, "You are not authorized to update this application");
   }
@@ -77,7 +73,7 @@ export const updateApplicationStatus = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: `Application status updated to ${status}`,
-    application,
+    data: application,  // ✅ consistent naming
   });
 });
 

@@ -1,5 +1,5 @@
-import  Job  from "../models/job.models.js";
-import  Application  from "../models/application.models.js";
+import { Job } from "../models/job.models.js";
+import { Application}  from "../models/application.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 

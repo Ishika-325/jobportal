@@ -1,6 +1,8 @@
-"use client"
+"use client";
 
-const JobCard = ({ job, onApply, isEmployer, onEdit, onDelete }) => {
+const JobCard = ({ job, onApply, isEmployer, onEdit, onDelete, appliedJobs = [] }) => {
+  const alreadyApplied = appliedJobs.includes(job._id); // ✅ Check if applied
+
   return (
     <div className="card">
       <div className="flex justify-between items-start mb-4">
@@ -28,8 +30,14 @@ const JobCard = ({ job, onApply, isEmployer, onEdit, onDelete }) => {
 
       <div className="border-t border-gray-200 pt-4 flex gap-2">
         {!isEmployer ? (
-          <button onClick={() => onApply(job._id)} className="btn btn-primary flex-1">
-            Apply Now
+          <button
+            onClick={() => !alreadyApplied && onApply(job._id)}
+            disabled={alreadyApplied}
+            className={`btn flex-1 ${
+              alreadyApplied ? "btn-disabled bg-gray-300 text-gray-600 cursor-not-allowed" : "btn-primary"
+            }`}
+          >
+            {alreadyApplied ? "Already Applied" : "Apply Now"}
           </button>
         ) : (
           <>
@@ -43,7 +51,7 @@ const JobCard = ({ job, onApply, isEmployer, onEdit, onDelete }) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default JobCard
+export default JobCard;

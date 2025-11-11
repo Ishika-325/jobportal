@@ -72,6 +72,8 @@ const DashboardPage = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
 
+      <ProfilePage />
+
       <div className="container mx-auto py-12">
         <div className="mb-8 flex justify-between items-center">
           <h1 className="text-3xl font-bold text-slate-900">
@@ -131,7 +133,7 @@ const StudentDashboard = ({ data = [], onDelete }) => {
 
   return (
     <div className="space-y-4">
-      <ProfilePage />
+      
       {data.length > 0 ? (
         data.map((application) => (
           <div key={application._id} className="card">

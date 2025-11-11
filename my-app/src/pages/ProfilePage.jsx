@@ -25,12 +25,10 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    
 
       <div className="container mx-auto py-12">
-        <button onClick={() => navigate(-1)} className="mb-8 text-blue-600 hover:text-blue-700 font-semibold">
-          ← Back
-        </button>
+        
 
         <div className="max-w-2xl">
           <div className="card mb-6">

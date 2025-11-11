@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
@@ -25,10 +23,10 @@ const JobDetailPage = () => {
   const fetchJobDetails = async () => {
     try {
       const response = await api.get(`/jobs/${id}`)
-      setJob(response.data.data)
-      setLoading(false)
+      setJob(response.data.job) // ✅ correct key
     } catch (error) {
       toast.error("Failed to load job details")
+    } finally {
       setLoading(false)
     }
   }
@@ -41,10 +39,7 @@ const JobDetailPage = () => {
 
     setApplying(true)
     try {
-      await api.post("/applications", {
-        jobId: id,
-        resumeUrl,
-      })
+      await api.post("/jobs/apply", { jobId: id, resumeUrl }) // ✅ correct route
       toast.success("Application submitted successfully!")
       setShowModal(false)
       navigate("/dashboard")
@@ -91,7 +86,9 @@ const JobDetailPage = () => {
               </div>
               <div>
                 <p className="text-gray-600 text-sm">Posted</p>
-                <p className="font-semibold text-slate-900">{new Date(job.createdAt).toLocaleDateString()}</p>
+                <p className="font-semibold text-slate-900">
+                  {new Date(job.createdAt).toLocaleDateString()}
+                </p>
               </div>
             </div>
 

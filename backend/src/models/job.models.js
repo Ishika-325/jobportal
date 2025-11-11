@@ -1,17 +1,21 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const jobSchema = new mongoose.Schema({
-title: { type: String, required: true },
-companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'User',},
-location: String,
-type: { type: String, enum: ["Full-time", "Part-time", "Internship", "Contract"], default: 'Full-time' },
-description: String,
-requirements: [String],
-salary: String,
-postedAt: { type: Date, default: Date.now },
-deadline: Date,
-applicantsCount: { type: Number, default: 0 },
-});
+const jobSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    companyName: { type: String, required: true },
+    location: { type: String, required: true },
+    salary: { type: Number },
+    type: { type: String },
+    description: { type: String },
+    requirements: { type: String },
+    postedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-
-export default mongoose.model('Job', jobSchema);
+export const Job = mongoose.model("Job", jobSchema);
